@@ -61,41 +61,41 @@ module base_case() {
   r=T/2;
   // Starting from the bottom up to the camera arm
   hull() {
-    translate([-19, 24+r, 0]) cylinder(30,r,r,$fn=16);
     translate([-31, 24+r, 0]) cylinder(30,r,r,$fn=16);
-  }
-  hull() {
-    translate([r-1, 16, 0]) cylinder(30,r,r,$fn=16);
     translate([-19, 24+r, 0]) cylinder(30,r,r,$fn=16);
   }
   hull() {
-    translate([r-1, -16, 0]) cylinder(30,r,r,$fn=16);
+    translate([-19, 24+r, 0]) cylinder(30,r,r,$fn=16);
     translate([r-1, 16, 0]) cylinder(30,r,r,$fn=16);
   }
   hull() {
-    translate([-19, -24-r, 0]) cylinder(30,r,r,$fn=16);
+    translate([r-1, 16, 0]) cylinder(30,r,r,$fn=16);
     translate([r-1, -16, 0]) cylinder(30,r,r,$fn=16);
   }
   hull() {
-    translate([-51+r, -24-r, 0]) cylinder(8,r,r,$fn=16);
-    translate([-26, -24-r, 0]) cylinder(8,r,r,$fn=16);
-  }
-  hull() {
-    translate([-35, -24-r, 0]) cylinder(14,r,r,$fn=16);
-    translate([-26, -24-r, 0]) cylinder(14,r,r,$fn=16);
-  }
-  hull() {
-    translate([-30, -24-r, 0]) cylinder(22,r,r,$fn=16);
-    translate([-26, -24-r, 0]) cylinder(22,r,r,$fn=16);
-  }
-  hull() {
-    translate([-26, -24-r, 0]) cylinder(30,r,r,$fn=16);
+    translate([r-1, -16, 0]) cylinder(30,r,r,$fn=16);
     translate([-19, -24-r, 0]) cylinder(30,r,r,$fn=16);
+  }
+  hull() {
+    translate([-19, -24-r, 0]) cylinder(30,r,r,$fn=16);
+    translate([-26, -24-r, 0]) cylinder(30,r,r,$fn=16);
+  }
+  hull() {
+    translate([-26, -24-r, 0]) cylinder(8,r,r,$fn=16);
+    translate([-51+r, -24-r, 0]) cylinder(8,r,r,$fn=16);
+  }
+  hull() {
+    translate([-26, -24-r, 0]) cylinder(22,r,r,$fn=16);
+    translate([-30, -24-r, 0]) cylinder(22,r,r,$fn=16);
+  }
+  hull() {
+    translate([-26, -24-r, 0]) cylinder(14,r,r,$fn=16);
+    translate([-35, -24-r, 0]) cylinder(14,r,r,$fn=16);
   }
 }
 
 module case_hole() {
-  scale([-1, 1, 1]) translate([-4, -.35, 15.4]) rotate([0,90]) cylinder(15, 5, 5, $fn=32);
+  scale([-1, 1, 1]) translate([-4-T, -.35, 15.4]) rotate([0,90]) cylinder(T+10, 5, 5, $fn=32);
 }
 
 module case() {
@@ -109,10 +109,8 @@ module case() {
       translate([-26.9, 25, 4.87]) rotate([0,0,180]) pin(2);
 
       scale([-1, 1, 1]) {
-        union() {
-          translate([0, -.35, 15.4]) rotate([0,90]) cylinder(2, 7, 7, $fn=32);
-          translate([2, -.35, 15.4]) rotate([0,90]) cylinder(1, 7, 6, $fn=32);
-        }
+        translate([0, -.35, 15.4]) rotate([0,90]) cylinder(2, 7, 7, $fn=32);
+        translate([2, -.35, 15.4]) rotate([0,90]) cylinder(1, 7, 6, $fn=32);
       }
     }
     case_hole();
@@ -123,36 +121,32 @@ module support_arm() {
   r=TT/2;
   // Tolerance for the camera casing
   s=.1;
-  difference() {
-    union() {
-      hull() {
-        translate([-35, -24-T/2, r]) cube([32, .1, 2*r], center=true);
-        translate([-35, -35, r]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-      }
-      hull() {
-        translate([-35, -35, r]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-        translate([-35, -95, 0]) rotate([ANGLE]) translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-      }
-      translate([-35, -95, 0]) rotate([ANGLE]) {
-        difference() {
-          union() {
-            hull() {
-              translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-              translate([0, r+s, r+10]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-            }
-            hull() {
-              translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-              translate([0, -r-s-20.3, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-            }
-            hull() {
-              translate([0, -r-s-20.3, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-              translate([0, -r-s-20.3, r+10]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
-            }
-          }
-          translate([0, -10, -19.65]) translate([0, 0, -TT/2]) cylinder(2*TT, 7.8, 7.8);
-          translate([0, 7+TT/2, 0]) rotate([90]) cylinder(2*TT, 9.5, 9.5);
+  hull() {
+    translate([-35, -24-T/2, r]) cube([32, .1, 2*r], center=true);
+    translate([-35, -35, r]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+  }
+  hull() {
+    translate([-35, -35, r]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+    translate([-35, -95, 0]) rotate([ANGLE]) translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+  }
+  translate([-35, -95, 0]) rotate([ANGLE]) {
+    difference() {
+      union() {
+        hull() {
+          translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+          translate([0, r+s, r+10]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+        }
+        hull() {
+          translate([0, r+s, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+          translate([0, -r-s-20.3, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+        }
+        hull() {
+          translate([0, -r-s-20.3, -r-13-s]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
+          translate([0, -r-s-20.3, r+10]) rotate([0, 90]) cylinder(32, r, r, $fn=16, center=true);
         }
       }
+      translate([0, -10, -16-TT]) cylinder(TT+6, 7.8, 7.8);
+      translate([0, 3+TT, 0]) rotate([90]) cylinder(TT+6, 9.5, 9.5);
     }
   }
 }
